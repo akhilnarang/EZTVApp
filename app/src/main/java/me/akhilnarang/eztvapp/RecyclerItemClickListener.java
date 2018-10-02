@@ -1,23 +1,19 @@
 package me.akhilnarang.eztvapp;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by kira on 18/1/17.
  */
 
 public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
-    private OnItemClickListener mListener;
-
-    public interface OnItemClickListener {
-        public void onItemClick(View view, int position);
-    }
-
     GestureDetector mGestureDetector;
+    private OnItemClickListener mListener;
 
     public RecyclerItemClickListener(Context context, OnItemClickListener listener) {
         mListener = listener;
@@ -44,5 +40,9 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
 
     @Override
     public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+    }
+
+    public interface OnItemClickListener {
+        public void onItemClick(View view, int position);
     }
 }

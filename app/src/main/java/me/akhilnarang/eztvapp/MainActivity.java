@@ -2,10 +2,6 @@ package me.akhilnarang.eztvapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +21,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -76,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(eztvAdapter);
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
-            @Override public void onItemClick(View view, int position) {
+            @Override
+            public void onItemClick(View view, int position) {
                 EZTVModel eztvModel = eztvModels.get(position);
                 Intent i = new Intent(getApplicationContext(), DetailsActivity.class);
                 i.putExtra("eztvObject", eztvModel);
@@ -106,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
                                 if (imageUrl.isEmpty()) {
                                     eztvModels.add(new EZTVModel(filename, episodeUrl, magnetUrl));
                                 } else {
-                                    Log.d("EZTV", imageUrl.replace("//","https://"));
-                                    eztvModels.add(new EZTVModel(filename, episodeUrl, magnetUrl, imageUrl.replace("//","https://")));
+                                    Log.d("EZTV", imageUrl.replace("//", "https://"));
+                                    eztvModels.add(new EZTVModel(filename, episodeUrl, magnetUrl, imageUrl.replace("//", "https://")));
                                 }
                             }
                             eztvAdapter.notifyDataSetChanged();
