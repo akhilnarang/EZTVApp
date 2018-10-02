@@ -1,4 +1,4 @@
-package me.akhilnarang.eztvapp;
+package me.akhilnarang.eztvapp.Utils;
 
 import android.content.Context;
 import android.view.GestureDetector;

@@ -1,6 +1,6 @@
-package me.akhilnarang.eztvapp;
+package me.akhilnarang.eztvapp.Utils;
 
-class Tools {
+public class Tools {
 
     public static String formatName(String name) {
 
