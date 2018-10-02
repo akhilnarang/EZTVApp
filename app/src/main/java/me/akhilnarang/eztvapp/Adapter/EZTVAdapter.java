@@ -4,11 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,13 +23,15 @@ import me.akhilnarang.eztvapp.Utils.Tools;
  * Created by men_in_black007 on 23/5/17.
  */
 
-public class EZTVAdapter extends RecyclerView.Adapter<EZTVAdapter.ViewHolder> {
+public class EZTVAdapter extends RecyclerView.Adapter<EZTVAdapter.ViewHolder> implements Filterable {
 
     private List<Torrent> eztvModelList;
+    private List<Torrent> originalEztvModelList;
     private Context context;
 
     public EZTVAdapter(Context context, List<Torrent> eztvModels) {
         this.eztvModelList = eztvModels;
+        this.originalEztvModelList = eztvModels;
         this.context = context;
     }
 
@@ -51,6 +56,43 @@ public class EZTVAdapter extends RecyclerView.Adapter<EZTVAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return eztvModelList.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                List<Torrent> filteredResults;
+                if (constraint.length() == 0) {
+                    filteredResults = originalEztvModelList;
+                } else {
+                    filteredResults = getFilteredResults(constraint.toString().toLowerCase());
+                }
+
+                FilterResults results = new FilterResults();
+                results.values = filteredResults;
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                eztvModelList = (List<Torrent>) results.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
+    protected List<Torrent> getFilteredResults(String constraint) {
+        List<Torrent> results = new ArrayList<>();
+
+        for (Torrent item : originalEztvModelList) {
+            if (item.getFilename().toLowerCase().contains(constraint)) {
+                results.add(item);
+            }
+        }
+
+        return results;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
