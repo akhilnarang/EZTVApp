@@ -38,7 +38,11 @@ public class DetailsActivity extends AppCompatActivity {
         torrentTitle.setText(torrentModel.getFilename());
 
         ImageView torrentImage = findViewById(R.id.torrentImage);
-        String imgurl=torrentModel.getLargeScreenshot();
-        Picasso.get().load(imgurl.replace("//", "https://")).placeholder(R.drawable.placeholder).into(torrentImage);
+        String imgurl = torrentModel.getLargeScreenshot();
+        if (imgurl.isEmpty()) {
+            Picasso.get().load(R.drawable.placeholder).into(torrentImage);
+        } else {
+            Picasso.get().load(imgurl.replace("//", "https://")).placeholder(R.drawable.placeholder).into(torrentImage);
+        }
     }
 }

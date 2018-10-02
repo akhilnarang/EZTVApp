@@ -38,10 +38,14 @@ public class EZTVAdapter extends RecyclerView.Adapter<EZTVAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String name=eztvModelList.get(position).getFilename();
+        String name = eztvModelList.get(position).getFilename();
         holder.filename.setText(Tools.formatName(name));
-        String imgUrl=eztvModelList.get(position).getSmallScreenshot();
-        Picasso.get().load(imgUrl.replace("//", "https://")).placeholder(R.drawable.placeholder).into(holder.image);
+        String imgUrl = eztvModelList.get(position).getSmallScreenshot();
+        if (imgUrl.isEmpty()) {
+            Picasso.get().load(R.drawable.placeholder).into(holder.image);
+        } else {
+            Picasso.get().load(imgUrl.replace("//", "https://")).placeholder(R.drawable.placeholder).into(holder.image);
+        }
     }
 
     @Override
