@@ -9,7 +9,7 @@ import java.util.List;
  * Created by men_in_black007 on 23/5/17.
  */
 
-public class EZTVModel{
+public class EZTVModel {
 
     @SerializedName("torrents_count")
     @Expose
