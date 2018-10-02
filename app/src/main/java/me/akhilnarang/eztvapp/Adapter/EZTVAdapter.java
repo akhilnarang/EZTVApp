@@ -1,4 +1,4 @@
-package me.akhilnarang.eztvapp;
+package me.akhilnarang.eztvapp.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +12,9 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
+import me.akhilnarang.eztvapp.Model.Torrent;
+import me.akhilnarang.eztvapp.R;
+import me.akhilnarang.eztvapp.Utils.Tools;
 
 /**
  * Created by men_in_black007 on 23/5/17.
@@ -19,10 +22,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class EZTVAdapter extends RecyclerView.Adapter<EZTVAdapter.ViewHolder> {
 
-    private List<EZTVModel> eztvModelList;
+    private List<Torrent> eztvModelList;
     private Context context;
 
-    public EZTVAdapter(Context context, List<EZTVModel> eztvModels) {
+    public EZTVAdapter(Context context, List<Torrent> eztvModels) {
         this.eztvModelList = eztvModels;
         this.context = context;
     }
@@ -35,8 +38,10 @@ public class EZTVAdapter extends RecyclerView.Adapter<EZTVAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.filename.setText(eztvModelList.get(position).getFilename());
-        Picasso.get().load(eztvModelList.get(position).getImageUrl()).placeholder(R.drawable.placeholder).into(holder.image);
+        String name=eztvModelList.get(position).getFilename();
+        holder.filename.setText(Tools.formatName(name));
+        String imgUrl=eztvModelList.get(position).getSmallScreenshot();
+        Picasso.get().load(imgUrl.replace("//", "https://")).placeholder(R.drawable.placeholder).into(holder.image);
     }
 
     @Override

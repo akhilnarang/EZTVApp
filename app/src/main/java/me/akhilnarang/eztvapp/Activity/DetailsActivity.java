@@ -1,4 +1,4 @@
-package me.akhilnarang.eztvapp;
+package me.akhilnarang.eztvapp.Activity;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -11,6 +11,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import androidx.appcompat.app.AppCompatActivity;
+import me.akhilnarang.eztvapp.Model.Torrent;
+import me.akhilnarang.eztvapp.R;
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -19,7 +21,7 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         Intent i = getIntent();
-        final EZTVModel eztvModel = (EZTVModel) i.getSerializableExtra("eztvObject");
+        final Torrent torrentModel = (Torrent) i.getSerializableExtra("torrentObject");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -27,16 +29,16 @@ public class DetailsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setType("application");
-                i.setData(Uri.parse(eztvModel.getMagnetUrl()));
+                i.setData(Uri.parse(torrentModel.getMagnetUrl()));
                 startActivity(Intent.createChooser(i, "Choose torrent app"));
-
             }
         });
 
-        TextView torrentTitle = (TextView) findViewById(R.id.torrentTitle);
-        torrentTitle.setText(eztvModel.getFilename());
+        TextView torrentTitle = findViewById(R.id.torrentTitle);
+        torrentTitle.setText(torrentModel.getFilename());
 
-        ImageView torrentImage = (ImageView) findViewById(R.id.torrentImage);
-        Picasso.get().load(eztvModel.getImageUrl()).placeholder(R.drawable.placeholder).into(torrentImage);
+        ImageView torrentImage = findViewById(R.id.torrentImage);
+        String imgurl=torrentModel.getLargeScreenshot();
+        Picasso.get().load(imgurl.replace("//", "https://")).placeholder(R.drawable.placeholder).into(torrentImage);
     }
 }
