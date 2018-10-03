@@ -3,4 +3,5 @@
     <string name="url">https://eztv.ag/api/get-torrents</string>
     <string name="title_activity_details">DetailsActivity</string>
     <string name="action_settings">Settings</string>
+    <string name="search">Search</string>
 </resources>

@@ -5,14 +5,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
-
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.squareup.picasso.Picasso
-
-import androidx.appcompat.app.AppCompatActivity
-import me.akhilnarang.eztvapp.model.Torrent
 import me.akhilnarang.eztvapp.R
-
+import me.akhilnarang.eztvapp.model.Torrent
 import java.util.Objects
 
 class DetailsActivity : AppCompatActivity() {

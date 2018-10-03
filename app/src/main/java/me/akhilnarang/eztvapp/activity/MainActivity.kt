@@ -2,8 +2,10 @@ package me.akhilnarang.eztvapp.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private var eztvAdapter: EZTVAdapter? = null
     private var apiService: ApiInterface? = null
     private val torrentList = ArrayList<Torrent>()
+    private lateinit var searchView: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,10 +35,34 @@ class MainActivity : AppCompatActivity() {
         initViews()
     }
 
+    override fun onBackPressed() {
+        if (!searchView.isIconified)
+            searchView.isIconified = true
+        else
+            super.onBackPressed()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+
+        searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                eztvAdapter?.filter?.filter(newText)
+                return true
+            }
+        })
+        return true
+    }
+
     private fun initViews() {
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        eztvAdapter = EZTVAdapter(this, torrentList)
+        eztvAdapter = EZTVAdapter(torrentList)
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
         recyclerView.itemAnimator = DefaultItemAnimator()
