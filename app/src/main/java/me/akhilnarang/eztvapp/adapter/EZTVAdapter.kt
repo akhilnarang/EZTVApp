@@ -1,4 +1,4 @@
-package me.akhilnarang.eztvapp.Adapter
+package me.akhilnarang.eztvapp.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,9 +8,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import me.akhilnarang.eztvapp.Model.Torrent
+import me.akhilnarang.eztvapp.model.Torrent
 import me.akhilnarang.eztvapp.R
-import me.akhilnarang.eztvapp.Utils.Tools
+import me.akhilnarang.eztvapp.utils.Tools
 
 class EZTVAdapter(private val context: Context, private val eztvModelList: List<Torrent>) : RecyclerView.Adapter<EZTVAdapter.ViewHolder>() {
 
