@@ -1,4 +1,4 @@
-package me.akhilnarang.eztvapp.Model
+package me.akhilnarang.eztvapp.model
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
