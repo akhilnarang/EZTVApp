@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import me.akhilnarang.eztvapp.Model.Torrent;
 import me.akhilnarang.eztvapp.R;
 
+import java.util.Objects;
+
 public class DetailsActivity extends AppCompatActivity {
 
     @Override
@@ -23,14 +25,13 @@ public class DetailsActivity extends AppCompatActivity {
         Intent i = getIntent();
         final Torrent torrentModel = (Torrent) i.getSerializableExtra("torrentObject");
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setType("application");
-                i.setData(Uri.parse(torrentModel.getMagnetUrl()));
-                startActivity(Intent.createChooser(i, "Choose torrent app"));
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.parse(torrentModel.getMagnetUrl()), "application");
+                startActivity(Intent.createChooser(intent, "Choose torrent app"));
             }
         });
 
@@ -39,6 +40,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         ImageView torrentImage = findViewById(R.id.torrentImage);
         String imgurl = torrentModel.getLargeScreenshot();
+        Objects.requireNonNull(imgurl, "No torrent image could be parsed");
         if (imgurl.isEmpty()) {
             Picasso.get().load(R.drawable.placeholder).into(torrentImage);
         } else {

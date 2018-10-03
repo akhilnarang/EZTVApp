@@ -6,6 +6,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -24,8 +25,6 @@ import retrofit2.Callback;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
     private EZTVAdapter eztvAdapter;
     private ApiInterface apiService;
     private List<Torrent> torrentList = new ArrayList<>();
@@ -39,14 +38,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViews() {
 
-        recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
         eztvAdapter = new EZTVAdapter(this, torrentList);
-        layoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(eztvAdapter);
         apiService = ApiClient.getClient().create(ApiInterface.class);
-        recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener((LinearLayoutManager) layoutManager) {
+        recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int current_page) {
                 getTorrents(current_page);
@@ -69,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<EZTVModel>() {
             @Override
             public void onResponse(Call<EZTVModel> call, retrofit2.Response<EZTVModel> response) {
+                Objects.requireNonNull(response.body(), "Response body is null");
+                Objects.requireNonNull(response.body().getTorrents(), "Failed to parse torrents from response body");
                 torrentList.addAll(response.body().getTorrents());
                 eztvAdapter.notifyDataSetChanged();
             }
