@@ -17,5 +17,4 @@ class EZTVModel {
     @SerializedName("torrents")
     @Expose
     var torrents: List<Torrent>? = null
-
 }

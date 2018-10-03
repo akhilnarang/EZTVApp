@@ -23,5 +23,4 @@ class Torrent : Serializable {
     @SerializedName("large_screenshot")
     @Expose
     var largeScreenshot: String? = null
-
 }
